@@ -2,6 +2,8 @@
 
 Filter bad words from the websites that you and your children are visiting. Use the Four Letter Filter to mask unwanted bad words from popular social media like Facebook and Twitter, and filter foul language from any web site or web search result.
 
+![alt text](git_images/four-letter-filter.png "Four Letter Filter screenshot")
+
 The Four Letter Filter removes over 425 bad words and word derivations found on the web. It will attempt filtering static content, dynamic content, and iframes. 
 
 There are several categories of bad words that can be filtered:
