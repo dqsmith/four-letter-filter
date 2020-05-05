@@ -1,0 +1,108 @@
+<div class="fl-container">
+	<!-- Toolbar -->
+	<mat-toolbar class="fl-toolbar">
+		<span class="fl-toolbar-name">{{toolbarName}}</span>
+		<span class="fl-toolbar-icon">
+			<img [src]="icon" class="fl-icon" alt="Icon">
+		</span>
+	</mat-toolbar>
+
+	<!-- Description -->
+	<p class="fl-description">Filter over 425 bad words.</p>
+
+	<!-- Panels -->
+	<mat-accordion>
+
+		<!-- Filter Panel -->
+		<mat-expansion-panel [expanded]="detailsOpen">
+			<mat-expansion-panel-header>
+				<mat-panel-title>
+					<strong>Filtering</strong>
+				</mat-panel-title>
+			</mat-expansion-panel-header>
+
+			<mat-button-toggle-group name="filter-buttons" aria-label="Filter buttons">
+				<mat-button-toggle class="fl-filterOn-button" (click)="onFilterSelected()" [checked]="filter.on"
+					value="on">Filter
+					On</mat-button-toggle>
+				<mat-button-toggle class="fl-filterOff-button" (click)="onFilterDeselected()" [checked]="!filter.on"
+					value="off">Filter
+					Off</mat-button-toggle>
+			</mat-button-toggle-group>
+
+			<p>
+				<mat-checkbox color="primary" (change)="onReload($event)" [checked]="filter.reload">Reload page when
+					turning filter off and resetting</mat-checkbox>
+			</p>
+
+			<mat-card>
+				<p>Categories</p>
+				<mat-checkbox [checked]="true" [disabled]="true">Really bad words</mat-checkbox>
+				<mat-checkbox color="primary" (change)="onOffensiveType($event)" [checked]="filter.wordTypes.offensive">
+					Possibly offensive words</mat-checkbox>
+				<mat-checkbox color="primary" (change)="onBibleType($event)" [checked]="filter.wordTypes.bible">Curse
+					words found in the Bible</mat-checkbox>
+			</mat-card>
+		</mat-expansion-panel>
+
+		<!-- Custom Word Panel -->
+		<mat-expansion-panel>
+			<mat-expansion-panel-header>
+				<mat-panel-title>
+					<strong>Add Custom Words</strong>
+				</mat-panel-title>
+			</mat-expansion-panel-header>
+
+			<mat-form-field>
+				<input matInput [(ngModel)]="customWord" (keyup.enter)="onCustomWord()" type="text"
+					placeholder="Add word to filter" id="customWord">
+				<mat-hint class="mat-hint" align="end">Add a word more than 2 characters</mat-hint>
+			</mat-form-field>
+
+			<button mat-raised-button color="primary" class="fl-custom-word-button" (click)="onCustomWord()"
+				[disabled]="customWord.length<3">Add</button>
+
+			<p>Custom words added: {{filter.counts.custom}}</p>
+
+		</mat-expansion-panel>
+
+		<!-- Replacement Options Panel -->
+		<mat-expansion-panel>
+			<mat-expansion-panel-header>
+				<mat-panel-title>
+					<strong>Replacement Options</strong>
+				</mat-panel-title>
+			</mat-expansion-panel-header>
+
+			<mat-radio-group class="fl-replacement-options">
+				<mat-radio-button color="primary" class="fl-replacement-button"
+					*ngFor="let option of filter.replacementTypes" (change)="onReplacement(option)"
+					[value]="option.value" [checked]="option.selected">
+					{{option.label}}
+				</mat-radio-button>
+			</mat-radio-group>
+			<div class="fl-example-selected-value">Example: What the {{filter.selectedReplacementType}}!</div>
+		</mat-expansion-panel>
+
+		<!-- Stats Panel -->
+		<mat-expansion-panel>
+			<mat-expansion-panel-header>
+				<mat-panel-title>
+					<strong>Stats</strong>
+				</mat-panel-title>
+			</mat-expansion-panel-header>
+			<table>
+				<tr *ngFor="let stat of stats">
+					<td>{{stat.name}}</td>
+					<td>{{stat.value}}</td>
+				</tr>
+			</table>
+			<div class="fl-buttons-container">
+				<button mat-button mat-raised-button color="primary" (click)="onReset()">Reset</button>
+				<button mat-button mat-raised-button color="primary" class="fl-about-button"
+					(click)="onAbout()">About</button>
+			</div>
+		</mat-expansion-panel>
+	</mat-accordion>
+	<div class="fl-spacer"></div>
+</div>
